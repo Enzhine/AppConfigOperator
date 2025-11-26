@@ -1,0 +1,11 @@
+apiVersion: ac.io/v1
+kind: AppConfig
+metadata:
+  name: test-config
+  namespace: app-config-ns
+spec:
+  appName: test
+  namespace: default
+  data:
+    key1: value1
+    key2: value2
