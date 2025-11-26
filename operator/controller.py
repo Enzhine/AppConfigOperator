@@ -66,8 +66,9 @@ def main():
             case "ADDED" | "UPDATED":
                 cm_manifest = desired_cm(obj)
                 try:
-                    core_api.create_namespaced_config_map(body=cm_manifest)
-                    core_api.patch_namespaced_custom_object(
+                    ns = obj['spec']['namespace']
+                    core_api.create_namespaced_config_map(namespace=ns, body=cm_manifest)
+                    crd_api.patch_namespaced_custom_object(
                         group="ac.io",
                         version="v1",
                         namespace=namespace,
@@ -75,7 +76,7 @@ def main():
                         name=name,
                         body={
                             "status": {
-                                "lastUpdated": datetime.now(datetime.timezone.utc).isoformat()
+                                "lastUpdated": datetime.datetime.now(datetime.timezone.utc).isoformat()
                             }
                         }
                     )
