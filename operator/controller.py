@@ -38,7 +38,6 @@ def desired_cm(ca):
         "kind": "ConfigMap",
         "metadata": {
             "name": f"{name}-config",
-            "namespace": namespace,
             "ownerReferences": owner_ref(ca)
         },
         "data": data
