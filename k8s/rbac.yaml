@@ -17,7 +17,7 @@ metadata:
 rules:
 - apiGroups: ["ac.io"]
   resources: ["appconfigs"]
-  verbs: ["get","list","watch"]
+  verbs: ["patch","get","list","watch"]
 - apiGroups: [""]
   resources: ["configmaps"]
   verbs: ["create","delete","get","list","watch"]
