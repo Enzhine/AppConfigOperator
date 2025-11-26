@@ -30,7 +30,6 @@ def owner_ref(ca):
 
 def desired_cm(ca):
     name = ca['spec']['appName']
-    namespace = ca['spec']['namespace']
     data = ca['spec']['data']
 
     return {

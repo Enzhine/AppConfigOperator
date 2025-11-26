@@ -16,5 +16,5 @@ spec:
       serviceAccountName: app-config-controller
       containers:
       - name: controller
-        image: docker.io/enzhine/app-config-controller:v1.2
+        image: docker.io/enzhine/app-config-controller:v1.3
         imagePullPolicy: Always
