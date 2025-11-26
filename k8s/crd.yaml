@@ -28,10 +28,10 @@ spec:
             properties:
               appName:
                 type: string
-                pattern: ^[a-zA-Z0-9_-]$
+                pattern: ^[a-zA-Z0-9_-]*$
               namespace:
                 type: string
-                pattern: ^[a-zA-Z0-9_-]$
+                pattern: ^[a-zA-Z0-9_-]*$
               data:
                 type: object
                 additionalProperties: true
