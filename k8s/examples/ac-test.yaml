@@ -5,7 +5,7 @@ metadata:
   namespace: app-config-ns
 spec:
   appName: test
-  namespace: default
+  namespace: app-config-ns
   data:
     key1: value1
     key2: value2
