@@ -80,7 +80,7 @@ def main():
                             }
                         }
                     )
-                    logging.info("Created configMap: %s", json.dumps(cm_manifest))
+                    logging.info("Created configMap: %s at %s", json.dumps(cm_manifest), ns)
                 except client.rest.ApiException as e:
                     if e.status == 409:
                         logging.info("Pod %s-pod already exists", name)
