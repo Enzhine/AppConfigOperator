@@ -57,33 +57,32 @@ def main():
         namespace = obj['metadata']['namespace']
         event_type = event["type"]
 
-        match event_type:
-            case "DELETED":
-                logging.info("configMap deleted: %s in %s", name, namespace)
-                continue
-            case "ADDED" | "UPDATED":
-                cm_manifest = desired_cm(obj)
-                try:
-                    ns = obj['spec']['namespace']
-                    core_api.create_namespaced_config_map(namespace=ns, body=cm_manifest)
-                    crd_api.patch_namespaced_custom_object(
-                        group="ac.io",
-                        version="v1",
-                        namespace=namespace,
-                        plural=PLURAL,
-                        name=name,
-                        body={
-                            "status": {
-                                "lastUpdated": datetime.datetime.now(datetime.timezone.utc).isoformat()
-                            }
+        if event_type == "DELETED":
+            logging.info("configMap deleted: %s in %s", name, namespace)
+            continue
+        if event_type == "ADDED" or event_type == "UPDATED":
+            cm_manifest = desired_cm(obj)
+            try:
+                ns = obj['spec']['namespace']
+                core_api.create_namespaced_config_map(namespace=ns, body=cm_manifest)
+                crd_api.patch_namespaced_custom_object(
+                    group="ac.io",
+                    version="v1",
+                    namespace=namespace,
+                    plural=PLURAL,
+                    name=name,
+                    body={
+                        "status": {
+                            "lastUpdated": datetime.datetime.now(datetime.timezone.utc).isoformat()
                         }
-                    )
-                    logging.info("Created configMap: %s at %s", json.dumps(cm_manifest), ns)
-                except client.rest.ApiException as e:
-                    if e.status == 409:
-                        logging.info("Pod %s-pod already exists", name)
-                    else:
-                        logging.exception("Unexpected error")
+                    }
+                )
+                logging.info("Created configMap: %s at %s", json.dumps(cm_manifest), ns)
+            except client.rest.ApiException as e:
+                if e.status == 409:
+                    logging.info("Pod %s-pod already exists", name)
+                else:
+                    logging.exception("Unexpected error")
 
 
 if __name__ == "__main__":
