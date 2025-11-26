@@ -1,0 +1,8 @@
+# echo-test.yaml
+apiVersion: demo.io/v1
+kind: EchoServer
+metadata:
+  name: hello
+  namespace: demo-crd
+spec:
+  image: alpine:3.19

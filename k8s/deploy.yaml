@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-config-controller
+  namespace: app-config-ns
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-config-controller
+  template:
+    metadata:
+      labels:
+        app: app-config-controller
+    spec:
+      serviceAccountName: app-config-controller
+      containers:
+      - name: controller
+        image: docker.io/enzhine/app-config-controller:v1
+        imagePullPolicy: Always
